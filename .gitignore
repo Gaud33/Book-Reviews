@@ -1,0 +1,44 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+server/logs/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editor & OS-specific files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build output (Frontend)
+client/dist/   # Ignore Vite build folder
+client/.vite/  # Ignore Vite cache
+
+# Build output (Backend - if using TypeScript)
+server/dist/   # Ignore compiled TypeScript files
+server/*.tsbuildinfo # TypeScript build info
+
+# Static files (if not needed in Git)
+server/public/uploads/   # Ignore uploaded images/files
+
+# Git-related
+.git/
