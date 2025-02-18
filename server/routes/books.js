@@ -1,5 +1,7 @@
 import express from "express";
 import axios from "axios";
+import { getAllUsers } from "../models/userModel.js";
+import {getAllBooks} from "../models/bookModel.js";
 
 const router = express.Router();
 
@@ -13,14 +15,34 @@ const getBookData = async (response) => {
     ? response.data.docs
     : response.data.works;
 
+  
   return bookData.map((book) => ({
     title: book.title,
-    author: book.author_name ? book.author_name[0] : "Unknown",
-    coverURL: book.cover_i
-      ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
+    author:   (book.author_name ) ? book.author_name[0]: (book.authors)? book.authors[0].name : "Unknown", // subject route has authors instead of author_name 
+    coverURL: (book.cover_i || book.cover_id)
+      ? `https://covers.openlibrary.org/b/id/${book.cover_i || book.cover_id}-L.jpg`
       : "/images/book-cover-placeholder.jpeg",
   }));
 };
+
+// Database connection test
+router.get("/dbtestuser", async(req,res) =>{
+  try{
+    const users = await getAllUsers();
+  res.json(users);
+  } catch(error){
+    res.status(500).json({error: "Failed to fetch users"});
+  } 
+})
+
+router.get("/dbtestbooks", async(req,res) =>{
+  try{
+    const books = await getAllBooks();
+  res.json(books);
+  } catch(error){
+    res.status(500).json({error: "Failed to fetch users"});
+  } 
+})
 
 // default home route
 router.get("/", async (req, res) => {
