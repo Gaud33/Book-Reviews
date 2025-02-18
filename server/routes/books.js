@@ -2,6 +2,7 @@ import express from "express";
 import axios from "axios";
 import { getAllUsers } from "../models/userModel.js";
 import {getAllBooks} from "../models/bookModel.js";
+import { getBookReview } from "../models/bookReviewModel.js";
 
 const router = express.Router();
 
@@ -38,16 +39,22 @@ router.get("/dbtestuser", async(req,res) =>{
 router.get("/dbtestbooks", async(req,res) =>{
   try{
     const books = await getAllBooks();
+    console.log("books retrieved ", books);
+    const reviewResponse = await getBookReview(books[0].coverurl);
+    console.log("books review retrieved", reviewResponse);
+    console.log(reviewResponse);
+    books[0].reviews = reviewResponse[0].review;
+
   res.json(books);
   } catch(error){
-    res.status(500).json({error: "Failed to fetch users"});
+    res.status(500).json({error: "Failed to fetch books"});
   } 
 })
 
 // default home route
 router.get("/", async (req, res) => {
   try {
-    // trending books
+    // trending books 
     let response = await axios.get(
       `https://openlibrary.org/trending/daily.json?limit=10`
     );
@@ -95,8 +102,16 @@ router.get("/search", async (req, res) => {
     if (!response.data.docs.length) {
       return res.status(404).json({ error: "No book found" });
     }
-    const booksData = await getBookData(response);
+    let booksData = await getBookData(response);
 
+    // check if the books have reviews
+     for(const book of booksData){
+      const response = await getBookReview(book.coverURL);
+      if(response[0]){
+          book.review = response[0].review;
+      }
+    }
+    console.log(booksData[0]);
     res.json(booksData);
     
   } catch (error) {

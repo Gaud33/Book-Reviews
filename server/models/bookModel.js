@@ -11,3 +11,4 @@ export const getAllBooks = async ()=>{
         res.status(500).json({error: "Book query error!"});
     }
 }
+
