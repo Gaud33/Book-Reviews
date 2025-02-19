@@ -84,7 +84,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// search route
+// book search route
 router.get("/search", async (req, res) => {
   const name = req.query.name;
   if (!name) {
@@ -107,11 +107,11 @@ router.get("/search", async (req, res) => {
     // check if the books have reviews
      for(const book of booksData){
       const response = await getBookReview(book.coverURL);
+      
       if(response[0]){
           book.review = response[0].review;
       }
     }
-    console.log(booksData[0]);
     res.json(booksData);
     
   } catch (error) {
