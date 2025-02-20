@@ -1,39 +1,53 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./BookList.css";
+import Slider from "./Slider.jsx";
+
+
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
-  useEffect(() => {
+  useEffect( () => {
     const fetchBooks = async () => {
-        try {
-          const response = await axios.get("http://localhost:3000/api/books"); 
+      try {
+        const response = await axios.get("http://localhost:3000/api/books");
 
-          setBooks(response.data);
-        } catch (error) {
-          console.error("Error fetching books:", error);
-        }
+        console.log("Fetched data:", response.data); // Debugging API response
+        setBooks(response.data); // Update state
+
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchBooks();
+     fetchBooks();
   }, []);
 
-  console.log(books);
-
   return (
-    <div>
-      <h2>Book List</h2>
-      <ul>
-        {books.map((book, index) => (
-          <li key={index}>
-            <h3>{book.title}</h3>
-            <p>Author: {book.author}</p>
-            <img src= {book.coverURL} alt={book.title} width="150" />
-          </li>
+    <>
+    {/* Render components only when loading completes*/}
+     {!loading && books && Object.keys(books).length > 0 && (
+      <div>
+        <h2>Book List</h2>
+        
+        {Object.keys(books).map((category) => ( // category is horror/fiction/...etc
+          
+          <div key={category}>
+            <h3>{category}</h3>
+            <Slider 
+            books ={ books[category] } // books["horror"] = {....}
+            />
+          </div>
         ))}
-      </ul>
-    </div>
-  );
-};
+      </div>
+    )}
+    </>
+);
+}
+
 
 export default BookList;
