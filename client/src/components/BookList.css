@@ -1,2 +1,4 @@
-
- 
+.books-display {
+    height: 350px;
+    display: block;
+}

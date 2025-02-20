@@ -1,0 +1,42 @@
+.preview-display{
+    width: 300px;
+    height: 370px;
+    border: 1px solid black;
+    padding: 10px;
+   
+    margin-top: -150px;
+    margin-right: -200px;
+    background-color: bisque;
+}
+
+.preview-content >img{
+    width: 90px;
+    height: 115px;
+}
+
+.book-summary
+{
+    font-size: 0.85em;
+    text-align: justify;
+}
+
+.preview-content{
+    display: flex;
+    justify-content: space-around;
+}
+
+.book-info >  h1{
+    font-size: 1.15rem;
+}
+
+.book-info{
+    width: 50%;
+}
+
+.btn-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 20px;
+
+}
