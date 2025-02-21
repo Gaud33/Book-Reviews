@@ -3,6 +3,7 @@ import axios from "axios";
 import { getAllUsers } from "../models/userModel.js";
 import {getAllBooks} from "../models/bookModel.js";
 import { getBookReview } from "../models/bookReviewModel.js";
+import {marked} from "marked";
 
 const router = express.Router();
 
@@ -17,14 +18,44 @@ const getBookData = async (response) => {
     : response.data.works;
 
   
-  return bookData.map((book) => ({
-    title: book.title,
-    author:   (book.author_name ) ? book.author_name[0]: (book.authors)? book.authors[0].name : "Unknown", // subject route has authors instead of author_name 
-    coverURL: (book.cover_i || book.cover_id)
-      ? `https://covers.openlibrary.org/b/id/${book.cover_i || book.cover_id}-L.jpg`
-      : "/images/book-cover-placeholder.jpeg",
-  }));
+  // Use Promise.all to await all descriptions
+  const booksWithDescriptions = await Promise.all(
+    bookData.map(async (book) => {
+      const description = await getBookDescription(book); // Await the description
+      return {
+        title: book.title,
+        author: book.author_name ? book.author_name[0] : (book.authors ? book.authors[0].name : "Unknown"), // subject route has authors instead of author_name 
+        coverURL: (book.cover_i || book.cover_id)
+          ? `https://covers.openlibrary.org/b/id/${book.cover_i || book.cover_id}-L.jpg`
+          : "/images/book-cover-placeholder.jpeg",  
+        description: description, // Now the description is awaited
+      };
+    })
+  );
+
+  return booksWithDescriptions;
+
 };
+
+//get book description
+const getBookDescription = async(book) => {
+  const workID = book.key.split("/").pop(); // split the key in / and get last element i.e workID
+  const response = await axios.get(`https://openlibrary.org/works/${workID}.json`);
+
+  
+  let description= response.data.description;
+  if(description)
+    description = (typeof description === "string")? description : description.value; // markdown value
+  else 
+    description = "No description";
+
+      //Convert Markdown to HTML (if available)
+      if (typeof marked !== "undefined") {
+        description = marked(description);
+    }
+    ;
+  return description;
+}
 
 // Database connection test
 router.get("/dbtestuser", async(req,res) =>{
