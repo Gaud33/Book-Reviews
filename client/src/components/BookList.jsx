@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./BookList.css";
 import Slider from "./Slider.jsx";
+import LinearProgress from "@mui/joy/LinearProgress";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -28,7 +29,7 @@ const BookList = () => {
     <>
       {/* Render components only when loading completes*/}
       {!loading && books && Object.keys(books).length > 0 && (
-        <div class = "books-list">
+        <div class="books-list">
           <h2>Book List</h2>
 
           {Object.keys(books).map(
@@ -46,6 +47,11 @@ const BookList = () => {
           )}
         </div>
       )}
+      {/*  Progressbar until content is loaded */}
+      <div class="progress-loader">
+        <LinearProgress
+         color="primary" />
+      </div>
     </>
   );
 };

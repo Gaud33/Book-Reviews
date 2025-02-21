@@ -1,5 +1,6 @@
 import React from "react";
 import "./Preview.css";
+import LinearProgress from '@mui/joy/LinearProgress';
 
 function Preview(props) {
   return (

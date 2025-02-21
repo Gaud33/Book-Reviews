@@ -6,3 +6,9 @@
 .books-list{
     z-index: 1;
 }
+
+.progress-loader{
+   margin: auto;
+    width: 20%;
+    margin-top: 20%;
+}   
