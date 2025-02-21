@@ -2,3 +2,7 @@
     height: 350px;
     display: block;
 }
+
+.books-list{
+    z-index: 1;
+}

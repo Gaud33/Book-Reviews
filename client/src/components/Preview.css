@@ -1,12 +1,14 @@
 .preview-display{
     width: 300px;
     height: 370px;
+   
     border: 1px solid black;
     padding: 10px;
    
-    margin-top: -150px;
+    margin-top: -200px;
     margin-right: -200px;
     background-color: bisque;
+    z-index: 2;
 }
 
 .preview-content >img{
@@ -15,9 +17,16 @@
 }
 
 .book-summary
-{
-    font-size: 0.85em;
-    text-align: justify;
+{   
+       text-align:justify;
+        max-height: 200px;
+        display: -webkit-box;                  /* Enable box layout for multi-line truncation */
+        -webkit-box-orient: vertical;          /* Set the orientation to vertical */
+        overflow: hidden;                      /* Hide text that overflows */
+        -webkit-line-clamp: 10;                 /* Limit the number of lines to 3 */
+        text-overflow: ellipsis;               /* Add ellipsis (...) */
+      
+   
 }
 
 .preview-content{
@@ -38,5 +47,5 @@
     flex-direction: row;
     justify-content: space-around;
     padding-top: 20px;
-
 }
+

@@ -28,7 +28,7 @@ const BookList = () => {
     <>
       {/* Render components only when loading completes*/}
       {!loading && books && Object.keys(books).length > 0 && (
-        <div>
+        <div class = "books-list">
           <h2>Book List</h2>
 
           {Object.keys(books).map(

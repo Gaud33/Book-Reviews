@@ -11,17 +11,16 @@ function Preview(props) {
           <p>{props.bookData.author}</p>
         </div>
       </div>
-      <p class="book-summary">
-        "Alice in Wonderland" tells the story of a young girl named Alice who
-        falls down a rabbit hole and enters a bizarre fantasy world called
-        Wonderland, where she encounters peculiar creatures like the Mad Hatter,
-        Cheshire Cat, and Queen of Hearts, experiencing strange situations that
-        defy logic, often involving changing size by eating and drinking magical
-        items; ultimately, Alice wakes up realizing her adventures were just a
-        dream.{" "}
-      </p>
+
+      {/*render the markdown received from descrption as HTML*/}
+      <div
+        class="book-summary"
+        dangerouslySetInnerHTML={{ __html: props.bookData.description }}
+      />
+
       <div class="btn-container">
-        <button class="bookmark-btn">Bookmark </button>
+        
+        <button class ="bookmark-btn"> Bookmark </button>
         <button class="review-btn">Review</button>
       </div>
     </div>
