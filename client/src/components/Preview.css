@@ -7,13 +7,16 @@
    
     margin-top: -200px;
     margin-right: -200px;
-    background-color: bisque;
+    background-color: #181818;
     z-index: 2;
+    opacity: 0.85;
+    color: white;
 }
 
 .preview-content >img{
     width: 90px;
     height: 115px;
+    opacity: 1;
 }
 
 .book-summary
@@ -26,7 +29,6 @@
         -webkit-line-clamp: 10;                 /* Limit the number of lines to 3 */
         text-overflow: ellipsis;               /* Add ellipsis (...) */
       
-   
 }
 
 .preview-content{
